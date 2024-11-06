@@ -1,25 +1,33 @@
 name: Trigger Azure ML Job
 
 on:
-  workflow_dispatch:  # This allows manual triggering
+  workflow_dispatch:  # This allows you to manually trigger the workflow
 
 jobs:
-  run-aml-job:
+  run_azure_ml_job:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    - name: Set up Azure CLI
-      uses: azure/setup-azure-cli@v1
-      with:
-        version: '2.44.0'  # Or the latest version of Azure CLI
+      # Step 2: Set up Azure CLI
+      - name: Set up Azure CLI
+        uses: azure/setup-azure-cli@v1
 
-    - name: Log in to Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      # Step 3: Azure CLI Login using the service principal credentials
+      - name: Azure CLI Login
+        run: |
+          echo "${{ secrets.AZURE_CREDENTIALS }}" > az_credentials.json
+          az login --service-principal --username $(jq -r .clientId az_credentials.json) --password $(jq -r .clientSecret az_credentials.json) --tenant $(jq -r .tenantId az_credentials.json)
+        
+      # Step 4: Install Azure Machine Learning CLI Extension
+      - name: Install Azure ML CLI Extension
+        run: |
+          az extension add --name ml
 
-    - name: Run Azure ML job
-      run: |
-        az ml job run submit --file ./src/model/job.yml  # Adjust the path to your job YAML file
+      # Step 5: Submit the Azure ML Job using the job.yml
+      - name: Submit Azure ML Job
+        run: |
+          az ml job run submit --file ./src/model/job.yml
