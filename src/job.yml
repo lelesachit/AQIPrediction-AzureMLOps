@@ -1,0 +1,8 @@
+experiment_name: my-experiment
+compute: azureml:my-compute-cluster
+environment: azureml:my-environment:1
+inputs:
+  data:
+    type: uri_file
+    path: azureml://datastores/mydatastore/paths/mydataset/
+script: src/model/train.py
