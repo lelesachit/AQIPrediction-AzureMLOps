@@ -3,15 +3,7 @@ type: command
 experiment_name: aqi-prediction-experiment
 compute: azureml:lelecomputeInstance01
 command: python src/model/train.py
-environment:
-  conda_file: 
-    dependencies:
-      - python=3.9 
-      - scikit-learn
-      - pandas
-      - seaborn
-      - numpy
-      - pip
+environment: azureml:sklearn-1.5:12
 inputs:
   data:
     type: uri_file
