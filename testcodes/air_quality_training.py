@@ -12,7 +12,8 @@ filterwarnings('ignore')
 
 def main(data_path):
     # Load dataset
-    csv_file_path = r'C:\Users\Sachit\Documents\Symbiosis\Fourth Year\Mlops\AQIPrediction\Data\city_day.csv'
+    csv_file_path = "https://lelestorage01.blob.core.windows.net/aqi-pred-data/city_day.csv?sp=r&st=2024-11-07T08:14:09Z&se=2024-11-30T16:14:09Z&spr=https&sv=2022-11-02&sr=b&sig=V7nnABQi3mZOfPbbAd%2FG5EsdBr5tWTLL%2FM1R5DGRCEM%3D"
+
     df_city_day = pd.read_csv(csv_file_path)
 
     # Function to show null values and their percentages
