@@ -3,7 +3,7 @@ type: command
 experiment_name: aqi-prediction-experiment
 compute: azureml:lelecomputeInstance01
 command: python src/model/train.py
-environment: azureml:sklearn-1.5:12
+environment: azureml:aqi-pred:1
 inputs:
   data:
     type: uri_file
