@@ -26,4 +26,5 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            az extension add --name ml
             az ml job run submit --file ./src/model/job.yml
