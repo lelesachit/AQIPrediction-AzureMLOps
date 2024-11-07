@@ -3,7 +3,7 @@ compute: azureml:lelecomputeInstance01
 environment: 
   conda:
     dependencies:
-      - python=3.9
+      - python=3.9 
       - scikit-learn
       - pandas
       - seaborn
