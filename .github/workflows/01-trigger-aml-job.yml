@@ -12,13 +12,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Azure CLI
-      - name: Set up Azure CLI
-        uses: azure/setup-azure-cli@v1
-        with:
-          azcliversion: 2.30.0
 
-      # Step 3: Azure CLI Login using the service principal credentials
+      # Step 2: Azure CLI Login using the service principal credentials
       - name: Azure CLI Login
         uses: azure/login@v2
         with:
@@ -26,6 +21,9 @@ jobs:
         
 
       # Step 4: Submit the Azure ML Job using the job.yml
-      - name: Submit Azure ML Job
-        run: |
-          az ml job run submit --file ./src/model/job.yml
+      - name: Submit Azure ML Job using CLI
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az ml job run submit --file ./src/model/job.yml
